@@ -1,1 +1,1 @@
-clash meta or singbox stream config
+Clash Meta for Android 免流配置
