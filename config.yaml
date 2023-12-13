@@ -179,7 +179,7 @@ proxy-providers:
     type: http
     # 填订阅链接，免流用户使用订阅转换时推荐勾选域名转IP（非免流佬无视）
     url: "订阅"
-    path: /storage/emulated/0/Android/data/com.github.metacubex.clash.meta/ProxyProviders/木瓜云.yaml
+    path: ./ProxyProviders/木瓜云.yaml
     <<: *test
 
 # 代理组
@@ -248,7 +248,7 @@ rule-providers:
     type: http
     behavior: domain
     url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml"
-    path: /0/Android/data/com.github.metacubex.clash.meta/RuleProviders/AD.yaml
+    path: ./RuleProviders/AD.yaml
     interval: 86400
 
 # 分流规则
