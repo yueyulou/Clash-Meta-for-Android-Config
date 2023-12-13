@@ -37,8 +37,8 @@ external-ui: ./Dashboard
 
 # 自定义 geox 地址
 geox-url:
-  geosite: "https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/geosite.dat"
-  geoip: "https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/geoip.dat"
+  geosite: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/geosite.dat"
+  geoip: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/geoip.dat"
 
 # 在 Clash 官方中，profile 应为扩展配置，但在 Clash.meta, 仅作为缓存项使用
 profile:
@@ -178,8 +178,8 @@ proxy-providers:
     # provider 类型，可选 http/file
     type: http
     # 填订阅链接，免流用户使用订阅转换时推荐勾选域名转IP（非免流佬无视）
-    url: "http://127.0.0.1:3000/download/木瓜云"
-    path: ./ProxyProviders/木瓜云.yaml
+    url: "订阅"
+    path: /storage/emulated/0/Android/data/com.github.metacubex.clash.meta/ProxyProviders/木瓜云.yaml
     <<: *test
 
 # 代理组
@@ -247,8 +247,8 @@ rule-providers:
   AD:
     type: http
     behavior: domain
-    url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml"
-    path: ./RuleProviders/AD.yaml
+    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml"
+    path: /storage/emulated/0/Android/data/com.github.metacubex.clash.meta/RuleProviders/AD.yaml
     interval: 86400
 
 # 分流规则
