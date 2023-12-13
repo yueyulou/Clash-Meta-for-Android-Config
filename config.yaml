@@ -4,9 +4,10 @@
 # https://ghgo.feizhuqwq.workers.dev/
 # https://github.rc1844.workers.dev/
 # https://gh.api.99988866.xyz/
+# https://mirror.ghproxy.com/
+# https://ghproxy.com/
 # https://gh.ddlc.top/
 # https://gh.con.sh/
-# https://ghproxy.com/
 
 # redirect 透明代理端口，仅代理 TCP 流量
 redir-port: 7891
