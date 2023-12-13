@@ -1,0 +1,289 @@
+# Clash.Meta官方文档：https://clash-meta.wiki/
+
+# GitHub 加速服务
+# https://ghgo.feizhuqwq.workers.dev/
+# https://github.rc1844.workers.dev/
+# https://gh.api.99988866.xyz/
+# https://gh.ddlc.top/
+# https://gh.con.sh/
+# https://ghproxy.com/
+
+# redirect 透明代理端口，仅代理 TCP 流量
+redir-port: 7891
+# tproxy 透明代理端口，可以代理 TCP 以及 UDP 流量
+tproxy-port: 1536
+# rule 规则匹配 / global 全局代理(需要在GLOBAL策略组选择代理/策略) / direct 全局直连 此项拥有默认值，默认为规则模式
+mode: rule
+# 日志级别，silent：静默，不输出 / error：仅输出发生错误至无法使用的日志 / warning：输出发生错误但不影响运行的日志，以及 error 级别内容 / info：输出一般运行的内容，以及 error 和 warning 级别的日志 / debug：尽可能的输出运行中所有的信息
+log-level: error
+# 允许局域网，允许其他设备经过 Clash 的代理端口访问互联网，可选值 true/false
+allow-lan: true
+# 绑定 IP, 通过 LAN 访问一个/一些特定的 IP 地址。"*" 绑定所有 IP 地址，默认值，不填写此项则绑定全部。192.168.31.31: 绑定单个 IPV4 地址。"[aaaa::a8aa:ff:fe09:57d8]": 绑定单个 IPV6 地址
+bind-address: '*'
+# 是否允许内核接受 IPv6 流量，可选值 true/false，默认为 false
+ipv6: false
+# GEO数据模式，更改 geoip 使用文件，mmdb 或者 dat，可选 true/flase，true 为 dat，此项有默认值 flase
+geodata-mode: true
+#【Meta专属】TCP连接并发，如果域名解析结果对应多个IP，并发所有IP，选择握手最快的IP进行连接
+tcp-concurrent: false
+
+# 外部控制 (API)，外部控制器，可以使用 RESTful API 来控制你的 Clash 内核
+external-controller: 127.0.0.1:9090
+# API 的访问密钥
+secret: ""
+# 外部用户界面，可以将静态网页资源（比如 Clash-dashboard) 运行在 Clash API, 路径为 API 地址/ui   可以为绝对路径，或者 Clash 工作目录的相对路径
+external-ui: ./Dashboard
+
+# 自定义 geox 地址
+geox-url:
+  geosite: "https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/geosite.dat"
+  geoip: "https://raw.githubusercontent.com/CHIZI-0618/v2ray-rules-dat/release/geoip.dat"
+
+# 在 Clash 官方中，profile 应为扩展配置，但在 Clash.meta, 仅作为缓存项使用
+profile:
+  # 储存 API 对策略组的选择，以供下次启动时使用。可选值为 true/false
+  store-selected: true
+  # 储存 fakeip 映射表（持久化fake-ip），域名再次发生连接时，使用原有映射地址。可选值为 true/false，
+  store-fake-ip: false
+
+#【Meta专属】sniffer域名嗅探器
+sniffer:
+  # 嗅探器开关
+  enable: true
+  # 嗅探协议对象：目前支持tls/http
+  sniff:
+    # TLS 默认如果不配置 ports，默认嗅探 443，全部端口为 0-65535
+    TLS:
+      ports: [0-65535]
+    # 需要嗅探的端口, 默认嗅探 80，全部端口为 0-65535
+    HTTP:
+      ports: [0-65535]
+      # 是否使用嗅探结果作为实际访问，默认 true
+      override-destination: true
+  # 需要强制嗅探的域名，默认只对 IP 嗅探
+  force-domain:
+    - '+.v2ex.com'
+  # 白名单，跳过嗅探结果
+  skip-domain:
+    - 'Mijia Cloud'
+    - 'dlg.io.mi.com'
+
+tun:
+  # 是否启用 tun 模式来路由全局流量。可选：true/false
+  enable: false
+  # tun 模式堆栈，如无使用问题，建议使用 system 栈，MacOS 用户推荐 gvisor 栈，可选：system/gvisor/lwip
+  stack: system
+  # 自动设置全局路由，可以自动将全局流量路由进入 tun 网卡。可选：true/false
+  auto-route: true
+  # 自动选择流量出站接口，多出口网卡同时连接的设备建议手动指定出口网卡，可选：true/false
+  auto-detect-interface: true
+  # dns 劫持，一般设置为 any:53 即可, 即劫持所有 53 端口的 udp 流量
+  dns-hijack:
+    - 'any:53'
+  # 黑名单(填UID)
+  exclude-uid:
+   # - 10114
+
+dns: 
+  # 是否启用，如为 false，则使用系统 DNS 解析，可选值 true/false
+  enable: true
+  # 是否解析 IPV6, 如为 false, 则回应 AAAA 的空解析，可选值 true/false
+  ipv6: false
+  # dns 服务监听
+  listen: 0.0.0.0:1053
+  # Clash 的 dns 处理模式，可选值 fake-ip / redir-host
+  enhanced-mode: fake-ip
+  # fakeip 下的 IP 段设置，tun 网卡的默认 ip 也使用此值，格式为 ip/掩码（一般填 198.18.0.1/16 或 28.0.0.1/8）
+  fake-ip-range: 28.0.0.1/8
+  # fakeip 过滤，以下地址不会下发 fakeip 映射用于连接
+  fake-ip-filter:
+    - '*.lan'
+  # 默认 dns, 用于解析 DNS 服务器 的域名。必须为 ip, 可为加密 dns
+  default-nameserver:
+    - 'https://223.5.5.5/dns-query#国内代理'
+  # 默认的域名解析服务器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
+  nameserver:
+    - 'https://1.0.0.1/dns-query#国外代理'
+  # 后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信，配置 fallback 后默认启用 fallback-filter，geoip-code 为 cn
+  fallback:
+    - 'https://1.12.12.12/dns-query#国内代理'
+  # 后备域名解析服务器筛选，满足条件的将使用 fallback 结果或只使用 fallback 解析
+  fallback-filter:
+    # 是否启用 fallback filter。可选值为 true/false
+    geoip: true
+    # 可选值为国家缩写，默认值为 CN。除了 geoip-code 配置的国家 IP, 其他的 IP 结果会被视为污染。geoip-code 配置的国家的结果会直接采用，否则将采用 fallback 结果
+    geoip-code: !CN
+    # 可选值为对于的 geosite 内包含的集合，geosite 列表的内容被视为已污染，匹配到 geosite 的域名，将只使用 fallback 解析，不去使用 nameserver
+    geosite:
+      - CN
+
+测速: &test
+  # 更新订阅的时间，单位为秒
+  interval: 86400
+  # 健康检查（测试延迟）
+  health-check:
+    # 是否启用，可选 true/false
+    enable: true
+    # 健康检查地址，推荐使用 https://www.gstatic.com/generate_204
+    url: 'https://www.gstatic.com/generate_204'
+    # 间隔多长时间进行一次测试,单位为秒
+    interval: 86400
+
+百度直连: &baidu
+  type: http
+  port: 443
+  headers:
+    Host: sptest.baidu.com
+    X-T5-Auth: 482857715
+    User-Agent: okhttp/3.11.0 Dalvik/2.1.0 (Linux; Build/RKQ1.200826.002) baiduboxapp/11.0.5.12 (Baidu; P1 11)
+
+# 此处填节点，格式见 https://wiki.metacubex.one/config/proxies/vmess/
+proxies:
+  - name: 南京 电信
+    server: 180.101.50.249
+    <<: *baidu
+
+  - name: 苏州 电信
+    server: 180.97.93.202
+    <<: *baidu
+
+  - name: 北京 电信
+    server: 220.181.7.1
+    <<: *baidu
+
+  - name: 广州 电信
+    server: 14.215.182.75
+    <<: *baidu
+
+  - name: 苏州 联通
+    server: 157.0.148.53
+    <<: *baidu
+
+  - name: 保定 联通
+    server: 110.242.70.68
+    <<: *baidu
+
+  - name: 广州 联通
+    server: 163.177.17.189
+    <<: *baidu
+
+  - name: 南京 移动
+    server: 36.155.169.188
+    <<: *baidu
+
+# 代理提供(订阅)组，添加/修改机场(名)请保证 proxy-providers 名称和 proxy-groups 同步添加/修改
+proxy-providers:
+  木瓜云:
+    # provider 类型，可选 http/file
+    type: http
+    # 填订阅链接，免流用户使用订阅转换时推荐勾选域名转IP（非免流佬无视）
+    url: "http://127.0.0.1:3000/download/木瓜云"
+    path: ./ProxyProviders/木瓜云.yaml
+    <<: *test
+
+# 代理组
+proxy-groups:
+  - name: "国外代理"
+    type: select
+    # 筛选关键词或正则表达式的节点，多个用|分隔
+    filter: "Aws|CF|SG|JP|US|UK|HK|PCG|阿联酋|5G|Netflix|大阪弁|罗马尼亚|东京|美國|韓國|香港|台湾|新加坡|日本|韩国|美国|英国|加拿大|德国|荷兰|土其尔|阿根廷|缅甸|伊拉克|冰岛|阿尔及利亚|俄罗斯|印度|狮城"
+    # 排除关键词或正则表达式的节点，多个用|分隔
+    exclude-filter: "校园网|ipv6|tcp|TCP"
+    # 不支持正则表达式，通过 | 分割，根据节点类型排除。节点类型：HTTP SOCKS Shadowsocks ShadowsocksR VMess VLESS Trojan Hysteria Hysteria2 TUIC WireGuard
+    exclude-type: "Shadowsocks|VLESS"
+    proxies:
+    use:
+      - 木瓜云
+
+  - name: "国内代理"
+    type: select
+    # 筛选关键词或正则表达式的节点，多个用|分隔
+    filter: "China|百度|四川|安徽|广西|宿迁|广东|辽宁|济南|沈阳|深圳|镇江|杭州|重庆|太原|南宁|九江|福州|上海|扬州|贵州|广州|昆明|长沙|武汉|郑州|陕西|北京|南京|兰州|西宁|呼和浩特|乌鲁木齐|芜湖|天津|南昌|苏州|成都|哈尔滨|石家庄|徐州|华南|河南|河北China|百度|四川|安徽|广西|宿迁|广东|辽宁|济南|沈阳|深圳|镇江|杭州|重庆|太原|南宁|九江|福州|上海|扬州|贵州|广州|昆明|长沙|武汉|郑州|陕西|北京|南京|兰州|西宁|呼和浩特|乌鲁木齐|芜湖|天津|南昌|苏州|成都|哈尔滨|石家庄|徐州|华南|河南|河北|山西|浙江"
+    # 排除关键词或正则表达式的节点，多个用|分隔
+    exclude-filter: "校园网|ipv6|tcp|TCP"
+    proxies:
+      - 百度直连
+    use:
+      - 木瓜云
+
+  - name: "游戏UDP"
+    type: select
+    # 筛选关键词或正则表达式的节点，多个用|分隔
+    filter: "镇江|杭州|上海|北京|南京|浙江"
+    # 排除关键词或正则表达式的节点，多个用|分隔
+    exclude-filter: "校园网|ipv6|tcp|TCP"
+    proxies:
+      - DIRECT
+    use:
+      - 木瓜云
+
+  - name: "百度直连"
+    type: select
+    proxies:
+      - 南京 电信
+      - 苏州 电信
+      - 北京 电信
+      - 广州 电信
+      - 苏州 联通
+      - 保定 联通
+      - 广州 联通
+      - 南京 移动
+
+  - name: "广告拦截(GEOSITE)"
+    type: select
+    proxies:
+      - PASS
+      - REJECT
+
+  - name: "广告拦截"
+    type: select
+    proxies:
+      - PASS
+      - REJECT
+
+# 分流规则提供(订阅)组
+rule-providers:
+  AD:
+    type: http
+    behavior: domain
+    url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml"
+    path: ./RuleProviders/AD.yaml
+    interval: 86400
+
+# 分流规则
+rules:
+  # 通过订阅规则进行广告拦截
+  - RULE-SET,AD,广告拦截
+  # 通过 geosite 内建广告规则进行 DNS 层面的广告拦截
+  - GEOSITE,category-ads-all,广告拦截(GEOSITE)
+  # 拦截指定包名的私人地址 # 备用 AND,((OR,(PROCESS-NAME,com.google.android.youtube),(PROCESS-NAME,com.tencent.mobileqq),(PROCESS-NAME,air.tv.douyu.android),(PROCESS-NAME,com.duowan.kiwi),(PROCESS-NAME,tv.danmaku.bili)),(GEOIP,PRIVATE,no-resolve)),REJECT
+  - AND,((PROCESS-NAME,com.google.android.youtube),(GEOIP,PRIVATE,no-resolve)),REJECT
+  - AND,((PROCESS-NAME,com.tencent.mobileqq),(GEOIP,PRIVATE,no-resolve)),REJECT
+  - AND,((PROCESS-NAME,air.tv.douyu.android),(GEOIP,PRIVATE,no-resolve)),REJECT
+  - AND,((PROCESS-NAME,com.duowan.kiwi),(GEOIP,PRIVATE,no-resolve)),REJECT
+  - AND,((PROCESS-NAME,tv.danmaku.bili),(GEOIP,PRIVATE,no-resolve)),REJECT
+  # 指定包名 UDP 规则 # 备用 AND,((OR,(PROCESS-NAME,com.tencent.tmgp.sgame),(PROCESS-NAME,com.tencent.cmocmna),(PROCESS-NAME,com.tencent.tmgp.cf)),(NETWORK,UDP)),游戏UDP
+  - AND,((PROCESS-NAME,com.tencent.cmocmna),(NETWORK,UDP)),游戏UDP
+  - AND,((PROCESS-NAME,com.tencent.tmgp.sgame),(NETWORK,UDP)),游戏UDP
+  - AND,((PROCESS-NAME,com.tencent.tmgp.cf),(NETWORK,UDP)),游戏UDP
+  # 屏蔽索尼 PS 更新服务
+  - DOMAIN-SUFFIX,playstation.net,REJECT
+  # 强制百度网盘上传、蓝奏云下载、123云盘上传和下载、文叔叔上传走国外
+  - DOMAIN-SUFFIX,pcs.baidu.com,国外代理
+  - DOMAIN-SUFFIX,lanzouc.com,国外代理
+  - DOMAIN-SUFFIX,m12.123pan.com,国外代理
+  - DOMAIN-SUFFIX,pd1.123pan.cn,国外代理
+  - DOMAIN-SUFFIX,down.wss.show,国外代理
+  # GEOSITE 规则
+  - GEOSITE,category-games@cn,国内代理
+  - GEOSITE,microsoft@cn,国内代理
+  - GEOSITE,steam@cn,国内代理
+  - GEOSITE,apple@cn,国内代理
+  - GEOSITE,cn,国内代理
+  # GEOIP 规则
+  - GEOIP,PRIVATE,DIRECT,no-resolve
+  - GEOIP,CN,国内代理
+  # 兜底规则
+  - MATCH,国外代理
+  # 防止 UDP 侧漏
+  - MATCH,REJECT
