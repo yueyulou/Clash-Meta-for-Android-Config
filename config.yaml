@@ -178,7 +178,7 @@ proxy-providers:
     # provider 类型，可选 http/file
     type: http
     # 填订阅链接，免流用户使用订阅转换时推荐勾选域名转IP（非免流佬无视）
-    url: "http://127.0.0.1:3000/download/%E6%9C%A8%E7%93%9C%E4%BA%91?target=ClashMeta"
+    url: "订阅"
     path: ./ProxyProviders/木瓜云.yaml
     <<: *test
 
