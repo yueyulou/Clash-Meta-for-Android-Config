@@ -248,7 +248,7 @@ rule-providers:
     type: http
     behavior: domain
     url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml"
-    path: /storage/emulated/0/Android/data/com.github.metacubex.clash.meta/RuleProviders/AD.yaml
+    path: /0/Android/data/com.github.metacubex.clash.meta/RuleProviders/AD.yaml
     interval: 86400
 
 # 分流规则
