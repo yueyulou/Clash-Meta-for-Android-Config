@@ -178,7 +178,7 @@ proxy-providers:
     # provider 类型，可选 http/file
     type: http
     # 填订阅链接，免流用户使用订阅转换时推荐勾选域名转IP（非免流佬无视）
-    url: "订阅"
+    url: "http://127.0.0.1:3000/download/%E6%9C%A8%E7%93%9C%E4%BA%91?target=ClashMeta"
     path: ./ProxyProviders/木瓜云.yaml
     <<: *test
 
@@ -187,7 +187,7 @@ proxy-groups:
   - name: "国外代理"
     type: select
     # 筛选关键词或正则表达式的节点，多个用|分隔
-    filter: "Aws|CF|SG|JP|US|UK|HK|PCG|阿联酋|5G|Netflix|大阪弁|罗马尼亚|东京|美國|韓國|香港|台湾|新加坡|日本|韩国|美国|英国|加拿大|德国|荷兰|土其尔|阿根廷|缅甸|伊拉克|冰岛|阿尔及利亚|俄罗斯|印度|狮城"
+    filter: "SG|JP|US|UK|HK|CF|Netflix|香港|台湾|日本|韩国|美国|英国|德国|荷兰|印度|新加坡|加拿大|俄罗斯|华盛顿"
     # 排除关键词或正则表达式的节点，多个用|分隔
     exclude-filter: "校园网|ipv6|tcp|TCP"
     # 不支持正则表达式，通过 | 分割，根据节点类型排除。节点类型：HTTP SOCKS Shadowsocks ShadowsocksR VMess VLESS Trojan Hysteria Hysteria2 TUIC WireGuard
@@ -199,7 +199,7 @@ proxy-groups:
   - name: "国内代理"
     type: select
     # 筛选关键词或正则表达式的节点，多个用|分隔
-    filter: "China|百度|四川|安徽|广西|宿迁|广东|辽宁|济南|沈阳|深圳|镇江|杭州|重庆|太原|南宁|九江|福州|上海|扬州|贵州|广州|昆明|长沙|武汉|郑州|陕西|北京|南京|兰州|西宁|呼和浩特|乌鲁木齐|芜湖|天津|南昌|苏州|成都|哈尔滨|石家庄|徐州|华南|河南|河北China|百度|四川|安徽|广西|宿迁|广东|辽宁|济南|沈阳|深圳|镇江|杭州|重庆|太原|南宁|九江|福州|上海|扬州|贵州|广州|昆明|长沙|武汉|郑州|陕西|北京|南京|兰州|西宁|呼和浩特|乌鲁木齐|芜湖|天津|南昌|苏州|成都|哈尔滨|石家庄|徐州|华南|河南|河北|山西|浙江"
+    filter: "镇江|浙江|南京|北京|上海|广东|广州|苏州|杭州|福州|扬州|贵州|兰州|徐州|郑州|广西|河南|河北|重庆|南宁|宿迁|沈阳|四川|安徽|深圳|辽宁|济南|九江|长沙|昆明|武汉|陕西|西宁|芜湖|天津|南昌|成都|山西|太原"
     # 排除关键词或正则表达式的节点，多个用|分隔
     exclude-filter: "校园网|ipv6|tcp|TCP"
     proxies:
@@ -210,7 +210,7 @@ proxy-groups:
   - name: "游戏UDP"
     type: select
     # 筛选关键词或正则表达式的节点，多个用|分隔
-    filter: "镇江|杭州|上海|北京|南京|浙江"
+    filter: "镇江|浙江|南京|北京|上海"
     # 排除关键词或正则表达式的节点，多个用|分隔
     exclude-filter: "校园网|ipv6|tcp|TCP"
     proxies:
